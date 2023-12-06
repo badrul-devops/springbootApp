@@ -22,7 +22,12 @@ pipeline{
     
                     sh 'mvn sonar:sonar'
                 }
-                }
+            }
+            }
+        }
+        stage("docker build"){
+            steps{
+                sh "docker build -t springbootapp ."
             }
         }
 
