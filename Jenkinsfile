@@ -30,6 +30,14 @@ pipeline{
                 sh "docker build -t springbootapp ."
             }
         }
+        stage("docker push"){
+             echo "pushing the image to dockerhub"
+                withCredentials([usernamePassword(credentialsId: "dockerHub",passwordVariable: "dockerHubPass" ,usernameVariable: "dockerHubUser" )]){
+                sh "docker tag springbootapp ${env.dockerHubUser}/springbootapp:latest"
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}" 
+                sh "docker push  ${env.dockerHubUser}/springbootapp:latest"
+        }
+
 
     }
 }
